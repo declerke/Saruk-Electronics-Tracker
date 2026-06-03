@@ -1,0 +1,9 @@
+# Saruk Electronics Price Tracker — local dev dependencies
+# Install with: uv venv .venv && uv pip install -r requirements.txt
+
+playwright==1.44.0
+psycopg2-binary==2.9.9
+dbt-postgres==1.8.2
+pandas==2.2.2
+pytest==8.2.2
+pytest-asyncio==0.23.7

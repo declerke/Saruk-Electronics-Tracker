@@ -1,0 +1,102 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: saruk_products
+        description: "Raw product data inserted by Playwright scraper — one row per product per daily run."
+        columns:
+          - name: product_id
+            description: "Auto-incrementing primary key."
+          - name: product_name
+            description: "Full product name as listed on saruk.co.ke."
+          - name: category
+            description: "Category slug e.g. Laptops, Phones & Tablets."
+          - name: current_price_kes
+            description: "Selling price in Kenya Shillings at scrape time."
+          - name: scrape_date
+            description: "Calendar date when this row was inserted."
+
+models:
+  - name: stg_saruk_products
+    description: "Cleaned and type-cast staging layer from raw.saruk_products."
+    columns:
+      - name: product_name
+        description: "Trimmed product name."
+        data_tests:
+          - not_null
+      - name: current_price_kes
+        description: "Validated numeric price in KES."
+        data_tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+      - name: scrape_date
+        description: "Date of this price observation."
+        data_tests:
+          - not_null
+      - name: category
+        description: "Product category."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Laptops"
+                - "Phones & Tablets"
+                - "TVs & Accessories"
+                - "Audio Devices"
+                - "Desktops"
+                - "Monitors & Accessories"
+                - "Gaming Essentials"
+                - "Wearables"
+                - "Networking & Smart Home"
+                - "Cameras & Photography"
+                - "Storage Devices"
+                - "Computing Accessories"
+                - "Smartphone Accessories"
+                - "Home Entertainment"
+                - "All In Ones"
+                - "Projectors & Accessories"
+                - "Laptop Bags"
+                - "Office Electronics"
+                - "Apple Store"
+                - "Laptop Parts & Maintenance"
+                - "Phone Parts & Maintenance"
+                - "Servers & Accessories"
+
+  - name: fct_price_history
+    description: "Full time-series price history — one row per product per scrape_date."
+    columns:
+      - name: product_name
+        data_tests:
+          - not_null
+      - name: current_price_kes
+        data_tests:
+          - not_null
+      - name: scrape_date
+        data_tests:
+          - not_null
+      - name: days_on_market
+        description: "Number of days since this product was first tracked."
+
+  - name: mart_latest_prices
+    description: "Most recent price per product — one row per unique product_url."
+    columns:
+      - name: product_name
+        data_tests:
+          - not_null
+      - name: current_price_kes
+        data_tests:
+          - not_null
+      - name: as_of_date
+        data_tests:
+          - not_null
+
+  - name: mart_price_changes
+    description: "Products whose price changed since the previous scrape."
+    columns:
+      - name: change_direction
+        data_tests:
+          - accepted_values:
+              values: ["up", "down", "new", "unchanged"]
