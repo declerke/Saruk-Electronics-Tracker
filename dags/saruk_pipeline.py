@@ -14,7 +14,7 @@ interaction with the Airflow 3.0 task SDK event loop.
 from __future__ import annotations
 
 import os
-from datetime import datetime, timezone, timedelta
+from datetime import date, datetime, timezone, timedelta
 
 from airflow import DAG
 from airflow.providers.standard.operators.bash import BashOperator
@@ -42,21 +42,13 @@ def _log_summary():
     """Query PostgreSQL and log product counts by category and scrape_date."""
     import logging
     import psycopg2
+    from scraper.saruk_scraper import DB_CONFIG
 
     logger = logging.getLogger(__name__)
 
-    db_config = {
-        "host": os.getenv("APP_DB_HOST", "postgres"),
-        "port": int(os.getenv("APP_DB_PORT", "5432")),
-        "dbname": os.getenv("APP_DB_NAME", "saruk_db"),
-        "user": os.getenv("APP_DB_USER", "postgres"),
-        "password": os.getenv("APP_DB_PASSWORD", "postgres"),
-    }
-
-    conn = psycopg2.connect(**db_config)
+    conn = psycopg2.connect(**DB_CONFIG)
     try:
         with conn.cursor() as cur:
-            import datetime as dt
             cur.execute("""
                 SELECT category, COUNT(*) as cnt
                 FROM raw.saruk_products
@@ -65,7 +57,7 @@ def _log_summary():
                 ORDER BY cnt DESC;
             """)
             rows = cur.fetchall()
-            logger.info("=== Today's Scrape Summary (%s) ===", dt.date.today())
+            logger.info("=== Today's Scrape Summary (%s) ===", date.today())
             total = 0
             for category, cnt in rows:
                 logger.info("  %-35s %4d products", category or "Uncategorized", cnt)

@@ -31,9 +31,7 @@ standalone_admin_password.txt
 # Local dev
 projectsummary.md
 
-# Assets (screenshots added after validation)
-assets/*.png
-assets/*.jpg
+# Assets
 !assets/.gitkeep
 
 # IDE

@@ -1,13 +1,14 @@
 apiVersion: 1
 datasources:
   - name: Saruk PostgreSQL
-    type: postgres
+    type: grafana-postgresql-datasource
     url: postgres:5432
     database: saruk_db
     user: postgres
     secureJsonData:
       password: postgres
     jsonData:
+      database: saruk_db
       sslmode: disable
       postgresVersion: 1500
       timescaledb: false

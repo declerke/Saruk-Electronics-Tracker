@@ -1,47 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_SARUK_POSTGRESQL",
-      "label": "Saruk PostgreSQL",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "postgres",
-      "pluginName": "PostgreSQL"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "10.0.0"
-    },
-    {
-      "type": "datasource",
-      "id": "postgres",
-      "name": "PostgreSQL",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -63,7 +20,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": {"type": "postgres", "uid": "${DS_SARUK_POSTGRESQL}"},
+      "datasource": {"type": "postgres", "uid": "P99E773AA6A3C6F15"},
       "fieldConfig": {
         "defaults": {
           "color": {"mode": "palette-classic"},
@@ -106,7 +63,7 @@
       },
       "targets": [
         {
-          "datasource": {"type": "postgres", "uid": "${DS_SARUK_POSTGRESQL}"},
+          "datasource": {"type": "postgres", "uid": "P99E773AA6A3C6F15"},
           "editorMode": "code",
           "format": "time_series",
           "rawQuery": true,
@@ -123,7 +80,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {"type": "postgres", "uid": "${DS_SARUK_POSTGRESQL}"},
+      "datasource": {"type": "postgres", "uid": "P99E773AA6A3C6F15"},
       "fieldConfig": {
         "defaults": {
           "color": {"mode": "thresholds"},
@@ -180,7 +137,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": {"type": "postgres", "uid": "${DS_SARUK_POSTGRESQL}"},
+          "datasource": {"type": "postgres", "uid": "P99E773AA6A3C6F15"},
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
@@ -197,7 +154,7 @@
       "type": "table"
     },
     {
-      "datasource": {"type": "postgres", "uid": "${DS_SARUK_POSTGRESQL}"},
+      "datasource": {"type": "postgres", "uid": "P99E773AA6A3C6F15"},
       "fieldConfig": {
         "defaults": {
           "color": {"mode": "thresholds"},
@@ -231,7 +188,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": {"type": "postgres", "uid": "${DS_SARUK_POSTGRESQL}"},
+          "datasource": {"type": "postgres", "uid": "P99E773AA6A3C6F15"},
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
@@ -258,7 +215,7 @@
       "type": "stat"
     },
     {
-      "datasource": {"type": "postgres", "uid": "${DS_SARUK_POSTGRESQL}"},
+      "datasource": {"type": "postgres", "uid": "P99E773AA6A3C6F15"},
       "fieldConfig": {
         "defaults": {
           "color": {"mode": "thresholds"},
@@ -290,7 +247,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": {"type": "postgres", "uid": "${DS_SARUK_POSTGRESQL}"},
+          "datasource": {"type": "postgres", "uid": "P99E773AA6A3C6F15"},
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
@@ -310,23 +267,7 @@
   "refresh": "1h",
   "schemaVersion": 38,
   "tags": ["saruk", "electronics", "price-tracker"],
-  "templating": {
-    "list": [
-      {
-        "current": {"selected": false, "text": "Saruk PostgreSQL", "value": "Saruk PostgreSQL"},
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "DS_SARUK_POSTGRESQL",
-        "options": [],
-        "query": "postgres",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "type": "datasource"
-      }
-    ]
-  },
+  "templating": {"list": []},
   "time": {"from": "now-30d", "to": "now"},
   "timepicker": {},
   "timezone": "Africa/Nairobi",

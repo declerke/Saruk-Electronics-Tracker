@@ -3,7 +3,6 @@ Utility functions for Saruk scraper: price parsing and brand extraction.
 """
 
 import re
-from decimal import Decimal, InvalidOperation
 
 
 KNOWN_BRANDS = [
@@ -17,8 +16,8 @@ KNOWN_BRANDS = [
     "Ubiquiti", "Mikrotik", "Cisco", "Anker", "Belkin", "Baseus",
     "Havit", "Redragon", "HyperX", "Creative", "Harman", "Marshall",
     "Yamaha", "Denon", "Marantz", "Polk", "Klipsch", "Edifier",
-    "ViewSonic", "BenQ", "AOC", "Iiyama", "Samsung", "Gigabyte",
-    "Seagate", "Crucial", "PNY", "ADATA", "Verbatim",
+    "ViewSonic", "BenQ", "AOC", "Iiyama", "Gigabyte",
+    "Crucial", "PNY", "ADATA", "Verbatim",
 ]
 
 BRAND_LOOKUP = {b.lower(): b for b in KNOWN_BRANDS}
@@ -27,27 +26,19 @@ BRAND_LOOKUP = {b.lower(): b for b in KNOWN_BRANDS}
 def extract_brand(product_name: str) -> str | None:
     """
     Extract brand from product name by matching against a known brand list.
-    Checks first word, then scans all words for a brand match.
     """
     if not product_name:
         return None
 
     words = product_name.split()
-    # Check first word
-    if words:
-        first = words[0].lower()
-        if first in BRAND_LOOKUP:
-            return BRAND_LOOKUP[first]
 
-    # Scan all words
     for word in words:
         clean = word.strip("(),.-").lower()
         if clean in BRAND_LOOKUP:
             return BRAND_LOOKUP[clean]
 
-    # Try two-word combos (e.g. "Western Digital")
     for i in range(len(words) - 1):
-        combo = (words[i] + " " + words[i + 1]).lower()
+        combo = (words[i].strip("(),.-") + " " + words[i + 1].strip("(),.-")).lower()
         if combo in BRAND_LOOKUP:
             return BRAND_LOOKUP[combo]
 
@@ -68,8 +59,8 @@ def parse_price(price_text: str) -> float | None:
     cleaned = cleaned.replace(",", "")
 
     try:
-        return float(Decimal(cleaned))
-    except (InvalidOperation, ValueError):
+        return float(cleaned)
+    except ValueError:
         return None
 
 
