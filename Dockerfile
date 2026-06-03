@@ -19,6 +19,6 @@ RUN pip install \
     "dbt-core==1.8.2" \
     "dbt-postgres==1.8.2" \
     pandas==2.2.2 \
-    pytest==8.2.2
+    pytest==9.0.3
 
 RUN playwright install chromium

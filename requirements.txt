@@ -5,5 +5,5 @@ playwright==1.44.0
 psycopg2-binary==2.9.9
 dbt-postgres==1.8.2
 pandas==2.2.2
-pytest==8.2.2
+pytest==9.0.3
 pytest-asyncio==0.23.7
